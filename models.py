@@ -16,7 +16,7 @@ class INTEL_ITEMS(SQLModel, table=True):
     TECHNIQUES_id: Optional[int] = None
     SOFTWARE_id: Optional[int] = None
     STANDARDS_id: Optional[int] = None
-    image: Optional[bytes] = None
+    image: Optional[str] = None
 
 
 class GROUPS(SQLModel, table=True):

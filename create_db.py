@@ -1,6 +1,4 @@
-from sqlmodel import SQLModel, create_engine, Field
-from sqlalchemy import UniqueConstraint
-from typing import Optional
+from sqlmodel import create_engine
 from models import INTEL_ITEMS, GROUPS, MITIGATIONS, TACTICS, TECHNIQUES, SOFTWARE, STANDARDS
 
 sqlite_file_name = "intel_database.db"
