@@ -2,6 +2,7 @@ from sqlmodel import SQLModel, Field
 from sqlalchemy import UniqueConstraint
 from typing import Optional
 
+
 class INTEL_ITEMS(SQLModel, table=True):
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
@@ -20,7 +21,7 @@ class INTEL_ITEMS(SQLModel, table=True):
 
 
 class GROUPS(SQLModel, table=True):
-    __table_args__=(UniqueConstraint("name"),)
+    __table_args__ = (UniqueConstraint("name"),)
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
     url: str = Field(nullable=False)
@@ -30,8 +31,9 @@ class GROUPS(SQLModel, table=True):
     techniques_used_ids: Optional[str] = None
     software: Optional[str] = None
 
+
 class MITIGATIONS(SQLModel, table=True):
-    __table_args__=(UniqueConstraint("name"),)
+    __table_args__ = (UniqueConstraint("name"),)
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
     description: Optional[str] = None
@@ -41,15 +43,17 @@ class MITIGATIONS(SQLModel, table=True):
     TECHNIQUES_id: Optional[int] = None
     STANDARDS_id: Optional[int] = None
 
+
 class TACTICS(SQLModel, table=True):
-    __table_args__=(UniqueConstraint("name"),)
+    __table_args__ = (UniqueConstraint("name"),)
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
     description: Optional[str] = None
     url: Optional[str] = None
 
+
 class TECHNIQUES(SQLModel, table=True):
-    __table_args__=(UniqueConstraint("name"),)
+    __table_args__ = (UniqueConstraint("name"),)
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
     description: Optional[str] = None
@@ -61,8 +65,9 @@ class TECHNIQUES(SQLModel, table=True):
     mitigation_control: Optional[str] = None
     mitigation_policy: Optional[str] = None
 
+
 class SOFTWARE(SQLModel, table=True):
-    __table_args__=(UniqueConstraint("name"),)
+    __table_args__ = (UniqueConstraint("name"),)
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
     description: Optional[str] = None
@@ -70,8 +75,9 @@ class SOFTWARE(SQLModel, table=True):
     related_framework: Optional[str] = None
     TECHNIQUES_id: Optional[int] = None
 
+
 class STANDARDS(SQLModel, table=True):
-    __table_args__=(UniqueConstraint("name"),)
+    __table_args__ = (UniqueConstraint("name"),)
     id: int = Field(primary_key=True)
     name: str = Field(nullable=False)
     description: Optional[str] = None
