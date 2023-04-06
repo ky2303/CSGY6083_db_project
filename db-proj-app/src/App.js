@@ -12,6 +12,7 @@ function App() {
 
   const handleAddItem = () => {
     setNewItem({
+      id: '',
       name: '',
       description: '',
       url: '',
@@ -26,6 +27,15 @@ function App() {
       STANDARDS_id: '',
       image: ''
     });
+  };
+
+  const handleDeleteItem = id => {
+    // Send a DELETE request to the API endpoint
+    fetch(`http://localhost:8000/intel_items/${id}`, { method: 'DELETE' })
+      .then(() => {
+        // Update the state to remove the deleted item
+        setData(prevState => prevState.filter(item => item.id !== id));
+      });
   };
 
   const handleSaveItem = () => {
@@ -43,6 +53,26 @@ function App() {
       });
   };
 
+  const handleUpdateItem = () => {
+    fetch('http://localhost:8000/intel_items/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    })
+      .then(response => response.json())
+      .then(item => {
+        setData([...data, item]);
+        setNewItem(null);
+      });
+  };
+
+  const handleCancelItem = () => {
+    // Clear the new item
+    setNewItem(null);
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewItem(prevState => ({
@@ -53,10 +83,11 @@ function App() {
 
   return (
     <>
-      <button onClick={handleAddItem}>+</button>
+    <h1>ThreatIntelDB</h1>
       <table>
         <thead>
           <tr>
+            <th>   </th>
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
@@ -76,6 +107,7 @@ function App() {
         <tbody>
           {data.map(item => (
             <tr key={item.id}>
+              <td><button onClick={handleUpdateItem}>...</button></td>
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.description}</td>
@@ -90,6 +122,7 @@ function App() {
               <td>{item.SOFTWARE_id}</td>
               <td>{item.STANDARDS_id}</td>
               <td>{item.image}</td>
+              <button onClick={() => handleDeleteItem(item.id)}>-</button>
             </tr>
           ))}
           {newItem && (
@@ -106,8 +139,10 @@ function App() {
                 </td>
               ))}
               <td><button onClick={handleSaveItem}>Save</button></td>
+              <td><button onClick={handleCancelItem}>Cancel</button></td>
             </tr>
           )}
+          <tr><button onClick={handleAddItem}>+</button></tr>
         </tbody>
       </table>
     </>
