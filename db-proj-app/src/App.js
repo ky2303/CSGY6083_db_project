@@ -53,9 +53,9 @@ function App() {
       });
   };
 
-  const handleUpdateItem = () => {
+  const handleUpdateItem = () => { // need to fix
     fetch('http://localhost:8000/intel_items/', {
-      method: 'PUT',
+      method: 'PUT', 
       headers: {
         'Content-Type': 'application/json'
       },
@@ -132,6 +132,7 @@ function App() {
                 <td key={key}>
                   <input
                     type="text"
+                    size="10"
                     name={key}
                     value={newItem[key]}
                     onChange={handleChange}
