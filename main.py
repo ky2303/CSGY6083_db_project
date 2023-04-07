@@ -12,10 +12,17 @@ engine = create_engine(sqlite_url)
 app = FastAPI(
     title="db_project",
     description="""
-    Threat Intelligence Tracking Database
+    # 🔍 Threat Intelligence Tracking Database
 
     ## github
     https://github.com/ky2303/CSGY6083_db_project
+
+    ## frontent (WIP)
+    http://34.172.159.141:3000/
+
+    ## FastAPI
+    https://fastapi.tiangolo.com/
+
     """
 )
 
