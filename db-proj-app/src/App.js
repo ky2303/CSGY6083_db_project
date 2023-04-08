@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+var local = false
+var localhost = ''
+
+if (local){
+  localhost = "localhost"
+} else {
+  localhost = "0.0.0.0"
+}
+
 function App() {
   const [data, setData] = useState([]);
   const [newItem, setNewItem] = useState(null);
@@ -8,7 +17,7 @@ function App() {
 
   // read items
   useEffect(() => {
-    fetch('http://localhost:8000/intel_items/')
+    fetch(`http://${localhost}:8000/intel_items/`)
       .then(response => response.json())
       .then(data => setData(data));
   }, []);
@@ -34,7 +43,7 @@ function App() {
   };
 
   const handleSaveItem = () => {
-    fetch('http://localhost:8000/intel_items/', {
+    fetch(`http://${localhost}:8000/intel_items/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -77,7 +86,7 @@ function App() {
 
   const handleSaveItemUpdate = () => {
     // Send a PUT request to the API endpoint
-    fetch(`http://localhost:8000/intel_items/${currentItem.id}`, {
+    fetch(`http://${localhost}:8000/intel_items/${currentItem.id}`, {
       method: 'PUT', 
       headers: {
         'Content-Type': 'application/json'
@@ -101,7 +110,7 @@ function App() {
   // delete item
   const handleDeleteItem = id => {
     // Send a DELETE request to the API endpoint
-    fetch(`http://localhost:8000/intel_items/${id}`, { method: 'DELETE' })
+    fetch(`http://${localhost}:8000/intel_items/${id}`, { method: 'DELETE' })
       .then(() => {
         // Update the state to remove the deleted item
         setData(prevState => prevState.filter(item => item.id !== id));
