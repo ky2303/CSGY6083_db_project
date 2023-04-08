@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-var local = false
+var deployed = false
 var localhost = ''
 
-if (local){
-  localhost = "localhost"
+if (deployed){
+  localhost = "34.172.159.141"
 } else {
-  localhost = "0.0.0.0"
+  localhost = "localhost"
 }
 
 function App() {
