@@ -197,8 +197,8 @@ function App() {
                   />
                 </td>
               ))}
-              <td><button onClick={handleSaveItem}>Save</button></td>
-              <td><button onClick={handleCancelItem}>Cancel</button></td>
+              <button onClick={handleSaveItem}>Save</button>
+              <button onClick={handleCancelItem}>Cancel</button>
             </tr>
           )}
           <tr><button onClick={handleAddItem}>New</button></tr>
