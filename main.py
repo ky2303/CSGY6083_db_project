@@ -18,7 +18,7 @@ app = FastAPI(
     https://github.com/ky2303/CSGY6083_db_project
 
     ## frontent (WIP)
-    http://34.172.159.141:3000/
+    http://localhost:3000/
 
     ## FastAPI
     https://fastapi.tiangolo.com/
@@ -121,7 +121,7 @@ def create_group(group: GROUPS):
 @app.get("/groups/", response_model=List[GROUPS])
 def read_groups(skip: int = 0, limit: int = 10):
     with Session(engine) as session:
-        groups = session.query(GROUPS).offset(skip).limit(limit).all()
+        groups = session.query(GROUPS).offset(skip).all()
         return groups
 
 
@@ -175,7 +175,7 @@ def create_mitigation(mitigation: MITIGATIONS):
 @app.get("/mitigations/", response_model=List[MITIGATIONS])
 def read_mitigations(skip: int = 0, limit: int = 10):
     with Session(engine) as session:
-        mitigations = session.query(MITIGATIONS).offset(skip).limit(limit).all()
+        mitigations = session.query(MITIGATIONS).offset(skip).all()
         return mitigations
 
 

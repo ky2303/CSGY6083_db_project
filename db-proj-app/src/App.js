@@ -204,7 +204,7 @@ function App() {
           <tr><button onClick={handleAddItem}>New</button></tr>
         </tbody>
       </table>
-      <div>docs: http://34.172.159.141:8000/docs</div>
+      {/* <div>docs: http://34.172.159.141:8000/docs</div> */}
     </>
   );
 }
