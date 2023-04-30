@@ -1,3 +1,4 @@
+import os
 from sqlmodel import create_engine
 from models import INTEL_ITEMS, GROUPS, MITIGATIONS, TACTICS, TECHNIQUES, SOFTWARE, STANDARDS
 

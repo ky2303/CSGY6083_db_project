@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  app:
+    build:
+      context: ./db-proj-app/
+      dockerfile: ./Dockerfile
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  backend:
+    # env_file:
+    #   - backend/.env
+    build:
+      context: ./db-proj-backend/
+      dockerfile: ./Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"

@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-var deployed = false
-var localhost = ''
+var deployed = true
+var localhost = 'localhost'
 
-if (deployed){
-  localhost = "34.172.159.141"
-} else {
-  localhost = "localhost"
-}
+if (deployed) { localhost = "127.0.0.1" };
 
 function App() {
   const [data, setData] = useState([]);
@@ -30,8 +26,8 @@ function App() {
       description: 'string',
       url: 'string',
       comments: 'string',
-      date_added: 'string',
-      last_updated: 'string',
+      date_added: Date.now(),
+      last_updated: Date.now(),
       GROUPS_id: 0,
       MITIGATIONS_id: 0,
       TACTICS_id: 0,
@@ -118,7 +114,6 @@ function App() {
   };
 
 
-
   return (
     <>
     <h1>ThreatIntelDB</h1>
@@ -152,8 +147,8 @@ function App() {
                 <td><input type="text" size="10" defaultValue={item.description} name={"description"} onChange={handleChangeUpdate}/></td>
                 <td><input type="text" size="10" defaultValue={item.url} name={"url"} onChange={handleChangeUpdate}/></td>
                 <td><input type="text" size="10" defaultValue={item.comments} name={"comments"} onChange={handleChangeUpdate}/></td>
-                <td><input type="text" size="10" defaultValue={item.date_added} name={"date_added"} onChange={handleChangeUpdate}/></td>
-                <td><input type="text" size="10" defaultValue={item.last_updated} name={"last_updated"} onChange={handleChangeUpdate}/></td>
+                <td><input type="date" size="10" defaultValue={item.date_added} name={"date_added"} onChange={handleChangeUpdate}/></td>
+                <td><input type="date" size="10" defaultValue={item.last_updated} name={"last_updated"} onChange={handleChangeUpdate}/></td>
                 <td><input type="text" size="10" defaultValue={item.GROUPS_id} name={"GROUPS_id"} onChange={handleChangeUpdate}/></td>
                 <td><input type="text" size="10" defaultValue={item.MITIGATIONS_id} name={"MITIGATIONS_id"} onChange={handleChangeUpdate}/></td>
                 <td><input type="text" size="10" defaultValue={item.TACTICS_id} name={"TACTICS_id"} onChange={handleChangeUpdate}/></td>

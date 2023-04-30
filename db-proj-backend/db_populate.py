@@ -3,12 +3,19 @@
 # standards are from NIST and ISO
 import json
 import requests
+import sqlite3
+from models import INTEL_ITEMS, GROUPS, MITIGATIONS, TACTICS, TECHNIQUES, SOFTWARE, STANDARDS
 
+sqlite_file_name = "intel_database.db"
+try:
+    conn = sqlite3.connect(sqlite_file_name)
+except Exception as e:
+    print(e)
+    exit()
+
+host = "localhost"
 local = True
-if local:
-    host = 'localhost'
-else:
-    host = '0.0.0.0' # ip/domain here
+if not local: host = ''
 
 with open("enterprise-attack.json") as _f:
     groups = 0
@@ -23,7 +30,9 @@ with open("enterprise-attack.json") as _f:
             ext_refs = _object['external_references'][0]['url']
         except:
             ext_refs = 0
+
         if ext_refs:
+
             if "https://attack.mitre.org/groups/" in ext_refs:
                 # POST to /groups/
                 print(f"[+] group found: {_object['name']}")
@@ -40,9 +49,15 @@ with open("enterprise-attack.json") as _f:
                     'techniques_used_ids': '',
                     'software': '',
                 }
-                # print(grp)
-                r = requests.post(f'http://{host}:8000/groups/', json=grp)
-                print(r.json())
+                # # requests
+                # r = requests.post(f'http://{host}:8000/groups/', json=grp)
+                # print(r.json())
+                # sql
+                sql = ''' INSERT INTO groups(id, name, url, associated_groups, description, techniques_used_ids, software) 
+                            VALUES (:id, :name, :url, :associated_groups, :description, :techniques_used_ids, :software)'''
+                cur = conn.cursor()
+                cur.execute(sql, grp)
+                conn.commit()
                 groups = groups + 1
                 # print(_object['external_references'][0]['url'])
       
@@ -63,8 +78,13 @@ with open("enterprise-attack.json") as _f:
                     'STANDARDS_id': 0
                 }
                 # print(mit)
-                r = requests.post(f'http://{host}:8000/mitigations/', json=mit)
-                print(r.json())
+                # r = requests.post(f'http://{host}:8000/mitigations/', json=mit)
+                # print(r.json())
+                sql = ''' INSERT INTO mitigations (id, name, description, url, policy_or_control, TECHNIQUES_id, STANDARDS_id)
+                            VALUES (:id, :name, :description, :url, :policy_or_control, :TECHNIQUES_id, :STANDARDS_id)'''
+                cur = conn.cursor()
+                cur.execute(sql, mit)
+                conn.commit()
                 mitigations = mitigations + 1
 
             if "https://attack.mitre.org/tactics/" in ext_refs:
@@ -81,8 +101,13 @@ with open("enterprise-attack.json") as _f:
                     'url': _object['external_references'][0]['url'],
                 }
                 # print(tac)
-                r = requests.post(f'http://{host}:8000/tactics/', json=tac)
-                print(r.json())
+                # r = requests.post(f'http://{host}:8000/tactics/', json=tac)
+                # print(r.json())
+                sql = ''' INSERT INTO tactics (id, name, description, url)
+                            VALUES (:id, :name, :description, :url)'''
+                cur = conn.cursor()
+                cur.execute(sql, tac)
+                conn.commit()
                 tactics = tactics + 1
 
             if "https://attack.mitre.org/techniques/" in ext_refs:
@@ -105,8 +130,13 @@ with open("enterprise-attack.json") as _f:
                 }
                 try:
                     # print(tec)
-                    r = requests.post(f'http://{host}:8000/techniques/', json=tec)
-                    print(r.json())
+                    # r = requests.post(f'http://{host}:8000/techniques/', json=tec)
+                    # print(r.json())
+                    sql = ''' INSERT INTO techniques (id, name, description, url, associated_tactic, TACTICS_id, is_child, mitigation_control, mitigation_policy)
+                            VALUES (:id, :name, :description, :url, :associated_tactic, :TACTICS_id, :is_child, :mitigation_control, :mitigation_policy)'''
+                    cur = conn.cursor()
+                    cur.execute(sql, tec)
+                    conn.commit()
                     techniques = techniques + 1
                 except:
                     print(f"\tadding technique failed: {_object['name']}")
@@ -127,8 +157,13 @@ with open("enterprise-attack.json") as _f:
                     'TECHNIQUES_id': 0
                 }
                 # print(sof)
-                r = requests.post(f'http://{host}:8000/software/', json=sof)
-                print(r.json())
+                # r = requests.post(f'http://{host}:8000/software/', json=sof)
+                # print(r.json())
+                sql = ''' INSERT INTO software (id, name, description, url, related_framework, TECHNIQUES_id)
+                            VALUES (:id, :name, :description, :url, :related_framework, :TECHNIQUES_id)'''
+                cur = conn.cursor()
+                cur.execute(sql, sof)
+                conn.commit()
                 software = software + 1
 
 
@@ -142,8 +177,14 @@ std = {
     'url': 'https://www.iso.org/standard/27001',
 }
 # print(std)
-r = requests.post(f'http://{host}:8000/standards/', json=std)
-print(r.json())
+# r = requests.post(f'http://{host}:8000/standards/', json=std)
+# print(r.json())
+sql = ''' INSERT INTO standards (id, name, description, url, regulatory_body)
+                            VALUES (:id, :name, :description, :url, :regulatory_body)'''
+cur = conn.cursor()
+cur.execute(sql, std)
+conn.commit()
+
 std = {
     'id': 1,
     'name': 'NIST CYBERSECURITY FRAMEWORK',
@@ -152,5 +193,10 @@ std = {
     'url': 'https://www.nist.gov/cyberframework',
 }
 # print(std)
-r = requests.post(f'http://{host}:8000/standards/', json=std)
-print(r.json())
+# r = requests.post(f'http://{host}:8000/standards/', json=std)
+# print(r.json())
+sql = ''' INSERT INTO standards (id, name, description, url, regulatory_body)
+                            VALUES (:id, :name, :description, :url, :regulatory_body)'''
+cur = conn.cursor()
+cur.execute(sql, std)
+conn.commit()
