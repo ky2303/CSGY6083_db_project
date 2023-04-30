@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
 from sqlmodel import create_engine, Session
 from typing import List
@@ -411,3 +411,22 @@ def delete_standard(standard_id: int):
             raise HTTPException(status_code=404, detail="Standard not found")
         session.delete(standard)
         session.commit()
+
+# REPORT
+
+@app.get("/report/top_groups")
+async def top_groups(lim: int = Query(..., description="The number of top groups to return")):
+    with Session(engine) as session:
+        # Query the INTEL_ITEMS table for the top "lim" occurrences of the "group" column
+        top_groups = session.execute(
+            "SELECT GROUPS_id, (SELECT name FROM GROUPS WHERE id = INTEL_ITEMS.GROUPS_id) as group_name, COUNT(*) as count FROM INTEL_ITEMS GROUP BY GROUPS_id ORDER BY count DESC LIMIT :lim",
+            {"lim": lim}
+        ).fetchall()
+        print(top_groups)
+
+        # Create a dictionary mapping group names to their occurrences
+        result = {}
+        for group in top_groups:
+            result[group[0]] = [ group[1] , group[2] ]
+
+    return JSONResponse(result)
