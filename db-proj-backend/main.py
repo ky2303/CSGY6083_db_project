@@ -17,7 +17,7 @@ app = FastAPI(
     ## github
     https://github.com/ky2303/CSGY6083_db_project
 
-    ## frontent (WIP)
+    ## frontent
     http://localhost:3000/
 
     ## FastAPI

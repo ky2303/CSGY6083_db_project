@@ -5,8 +5,13 @@ services:
     build:
       context: ./db-proj-app/
       dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    # environment:
+    #   - "HOST=192.168.1.164"
     ports:
-      - "127.0.0.1:3000:3000"
+      - "0.0.0.0:3000:3000"
+    restart: always
 
   backend:
     # env_file:
@@ -15,4 +20,5 @@ services:
       context: ./db-proj-backend/
       dockerfile: ./Dockerfile
     ports:
-      - "127.0.0.1:8000:8000"
+      - "0.0.0.0:8000:8000"
+    restart: always

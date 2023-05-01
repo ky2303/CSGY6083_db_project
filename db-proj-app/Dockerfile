@@ -8,6 +8,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 # Silent clean install of npm
+# RUN npm install -g npm@9.6.5
 RUN npm ci --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 # add app

@@ -1,10 +1,9 @@
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
+var host = 'localhost'
 var deployed = true
-var localhost = 'localhost'
-
-if (deployed) { localhost = "127.0.0.1" };
+if (deployed) { host = process.env.REACT_APP_HOST };
 
 const GroupDetails = () => {
     const [group, setGroup] = useState([]);
@@ -12,7 +11,7 @@ const GroupDetails = () => {
     const { slug } = useParams();
 
     useEffect(() => {
-        fetch(`http://${localhost}:8000/groups/${slug}`)
+        fetch(`http://${host}:8000/groups/${slug}`)
           .then(response => response.json())
           .then(group => setGroup(group));
       }, []);

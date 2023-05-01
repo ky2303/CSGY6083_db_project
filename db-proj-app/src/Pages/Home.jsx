@@ -3,13 +3,12 @@ import React, { useState, useEffect } from 'react';
 
 var host = 'localhost'
 var deployed = true
-if (deployed) { host = "127.0.0.1" };
+if (deployed) { host = process.env.REACT_APP_HOST };
 
 const Home = () => {
 	const [data, setData] = useState([]);
   const [newItem, setNewItem] = useState(false);
   const [groups, setGroups] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState(null);
   const [editing, setEditing] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
 
