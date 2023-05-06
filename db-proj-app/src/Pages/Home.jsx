@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 var host = 'localhost'
-var deployed = true
-if (deployed) { host = process.env.REACT_APP_HOST };
+var deployed = false
+if (deployed) { host = '' };
 
 const Home = () => {
 	const [data, setData] = useState([]);

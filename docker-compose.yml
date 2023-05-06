@@ -7,15 +7,11 @@ services:
       dockerfile: ./Dockerfile
     env_file:
       - .env
-    # environment:
-    #   - "HOST=192.168.1.164"
     ports:
       - "0.0.0.0:3000:3000"
     restart: always
 
   backend:
-    # env_file:
-    #   - backend/.env
     build:
       context: ./db-proj-backend/
       dockerfile: ./Dockerfile

@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
-var deployed = true
-var localhost = 'localhost'
+var deployed = false
+var host = 'localhost'
 
-if (deployed) { localhost = "127.0.0.1" };
+if (deployed) { host = ''};
 
 const Report = () => {
 
     const [topGroups, setTopGroups] = useState([]);
 
     useEffect(() => {
-        fetch(`http://${localhost}:8000/report/top_groups?lim=3`)
+        fetch(`http://${host}:8000/report/top_groups?lim=3`)
           .then(response => response.json())
           .then(topGroups => setTopGroups(topGroups));
       }, []);
